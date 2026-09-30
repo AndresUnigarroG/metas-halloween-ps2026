@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metas Halloween 2026 — Pollo Sorpresa</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --naranja:#E8520A; --naranja-claro:#FEF0E8; --naranja-borde:#F5B38A;
+  --morado:#4A1D8C; --morado-claro:#F0EAFF; --morado-borde:#C4A8F0;
+  --verde:#1A6B3C;  --verde-claro:#E8F5EE;  --verde-borde:#7DC9A0;
+  --gris0:#F7F6F4;  --gris1:#EEEDE9;        --gris2:#C8C6BF;
+  --gris3:#8A8880;  --gris4:#3A3936;        --negro:#1A1917;
+  --radio:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F7F6F4;color:var(--negro);min-height:100vh}
+h1,h2,h3,h4{font-family:'Sora',sans-serif}
+
+/* HEADER */
+.header{background:var(--negro);padding:2rem 2rem 1.5rem;text-align:center}
+.header-eyebrow{font-size:11px;letter-spacing:.12em;color:var(--gris2);text-transform:uppercase;margin-bottom:.6rem;font-family:'DM Sans',sans-serif}
+.header-title{font-size:28px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:.4rem}
+.header-title span{color:var(--naranja)}
+.header-sub{font-size:13px;color:var(--gris3)}
+.header-chips{display:flex;justify-content:center;gap:10px;margin-top:1rem;flex-wrap:wrap}
+.chip{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid var(--gris3);color:var(--gris2)}
+
+/* TOGGLE ESCENARIO */
+.toggle-wrap{display:flex;justify-content:center;padding:1.5rem 1rem .5rem;gap:0}
+.toggle-btn{padding:10px 28px;font-family:'Sora',sans-serif;font-size:14px;font-weight:600;border:2px solid var(--negro);cursor:pointer;background:#fff;color:var(--negro);transition:all .2s}
+.toggle-btn:first-child{border-radius:var(--radio) 0 0 var(--radio)}
+.toggle-btn:last-child{border-radius:0 var(--radio) var(--radio) 0}
+.toggle-btn.activo{background:var(--negro);color:#fff}
+.toggle-hint{text-align:center;font-size:12px;color:var(--gris3);margin-bottom:1.5rem}
+
+/* NAV PUNTOS */
+.nav-puntos{display:flex;justify-content:center;gap:8px;padding:0 1rem 1.5rem;flex-wrap:wrap}
+.nav-btn{padding:8px 18px;font-size:13px;font-weight:500;border-radius:20px;border:1.5px solid var(--gris2);background:#fff;cursor:pointer;color:var(--gris4);transition:all .2s;font-family:'DM Sans',sans-serif}
+.nav-btn.activo{border-color:var(--naranja);background:var(--naranja-claro);color:var(--naranja)}
+
+/* PANEL PUNTO */
+.panel{display:none;padding:0 1rem 3rem;max-width:800px;margin:0 auto}
+.panel.visible{display:block}
+
+/* PUNTO HEADER */
+.punto-header{background:var(--negro);border-radius:var(--radio) var(--radio) 0 0;padding:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.punto-nombre{font-size:22px;font-weight:700;color:#fff;font-family:'Sora',sans-serif}
+.punto-director{font-size:13px;color:var(--gris3);margin-top:3px}
+.punto-escenario-badge{font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px}
+.badge-base{background:#2A2927;color:var(--gris2);border:1px solid var(--gris4)}
+.badge-mod{background:var(--naranja);color:#fff}
+
+/* RESUMEN 3 PRODUCTOS */
+.resumen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gris1);border:1px solid var(--gris1)}
+.resumen-cell{background:#fff;padding:1.1rem 1rem;text-align:center}
+.rc-icono{font-size:20px;margin-bottom:.3rem}
+.rc-prod{font-size:11px;color:var(--gris3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem}
+.rc-num{font-size:32px;font-weight:700;font-family:'Sora',sans-serif;line-height:1}
+.rc-num.naranja{color:var(--naranja)}
+.rc-num.morado{color:var(--morado)}
+.rc-num.verde{color:var(--verde)}
+.rc-sub{font-size:12px;color:var(--gris3);margin-top:.3rem}
+
+/* SECCIONES PRODUCTO */
+.sec{background:#fff;border-top:1px solid var(--gris1);padding:1.5rem}
+.sec-titulo{font-size:16px;font-weight:700;margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem}
+.sec-titulo-bar{width:4px;height:18px;border-radius:2px;flex-shrink:0}
+.bar-naranja{background:var(--naranja)}
+.bar-morado{background:var(--morado)}
+.bar-verde{background:var(--verde)}
+.sec-desc{font-size:13px;color:var(--gris3);margin-bottom:1rem;padding-left:calc(.5rem + 4px)}
+
+/* TABLA META */
+.tabla-meta{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:.75rem}
+.tabla-meta th{background:var(--gris0);padding:.6rem .75rem;text-align:left;font-weight:600;font-size:11px;color:var(--gris3);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--gris1)}
+.tabla-meta td{padding:.65rem .75rem;border-bottom:1px solid var(--gris0);vertical-align:middle}
+.tabla-meta tr:last-child td{border-bottom:none}
+.num-grande{font-size:20px;font-weight:700;font-family:'Sora',sans-serif}
+.num-grande.naranja{color:var(--naranja)}
+.num-grande.morado{color:var(--morado)}
+.num-grande.verde{color:var(--verde)}
+.pill-part{display:inline-block;font-size:11px;font-weight:600;padding:3px 8px;border-radius:12px;background:var(--gris0);color:var(--gris4);border:1px solid var(--gris1)}
+
+/* BARRA DE PROGRESO */
+.barra-wrap{height:6px;background:var(--gris1);border-radius:3px;overflow:hidden;margin-top:4px}
+.barra-fill{height:100%;border-radius:3px}
+
+/* FRASE ALCANZABILIDAD */
+.frase-box{border-radius:var(--radio);padding:.85rem 1rem;font-size:13px;line-height:1.6;margin-top:.5rem}
+.frase-naranja{background:var(--naranja-claro);border-left:3px solid var(--naranja);color:#7A2A00}
+.frase-morado{background:var(--morado-claro);border-left:3px solid var(--morado);color:#2A0A60}
+.frase-verde{background:var(--verde-claro);border-left:3px solid var(--verde);color:#0A3D20}
+.frase-titulo{font-weight:600;margin-bottom:.3rem;font-family:'Sora',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+
+/* METODOLOGÍA */
+.metodologia{background:#fff;border:1px solid var(--gris1);border-radius:var(--radio);padding:1.5rem;margin:0 1rem 1.5rem;max-width:800px;margin-left:auto;margin-right:auto}
+.met-titulo{font-size:15px;font-weight:700;margin-bottom:1rem;color:var(--negro)}
+.met-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.met-item{padding:.85rem;background:var(--gris0);border-radius:8px}
+.met-num{font-size:22px;font-weight:700;color:var(--naranja);font-family:'Sora',sans-serif;margin-bottom:.3rem}
+.met-label{font-size:12px;font-weight:600;color:var(--negro);margin-bottom:.2rem}
+.met-desc{font-size:12px;color:var(--gris3);line-height:1.5}
+
+/* FINANCIERO */
+.financiero{background:var(--negro);border-radius:0 0 var(--radio) var(--radio);padding:1.5rem}
+.fin-titulo{font-size:14px;font-weight:600;color:var(--gris3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem}
+.fin-fila{display:flex;justify-content:space-between;align-items:baseline;padding:.5rem 0;border-bottom:1px solid #2A2927}
+.fin-fila:last-child{border-bottom:none}
+.fin-label{font-size:13px;color:var(--gris3)}
+.fin-valor{font-size:15px;font-weight:600;color:#fff;font-family:'Sora',sans-serif}
+.fin-total-fila{display:flex;justify-content:space-between;align-items:baseline;padding-top:.85rem;margin-top:.5rem;border-top:1px solid #444}
+.fin-total-label{font-size:14px;color:#fff;font-weight:600}
+.fin-total-valor{font-size:24px;font-weight:700;color:var(--naranja);font-family:'Sora',sans-serif}
+.fin-nota{font-size:11px;color:var(--gris3);margin-top:.75rem;line-height:1.5}
+
+/* SEPARADOR SECCION */
+.sep{border:none;border-top:2px solid var(--gris1);margin:1.5rem 0}
+
+@media(max-width:500px){
+  .resumen-grid{grid-template-columns:1fr}
+  .rc-num{font-size:26px}
+  .punto-header{padding:1rem}
+  .nav-puntos{gap:6px}
+  .nav-btn{padding:7px 12px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-eyebrow">Pollo Sorpresa · Campaña de temporada</div>
+  <div class="header-title">Bajo el <span>hechizo</span> del sabor</div>
+  <div class="header-sub">Metas por punto · Halloween 2026</div>
+  <div class="header-chips">
+    <span class="chip">5 oct – 2 nov</span>
+    <span class="chip">29 días</span>
+    <span class="chip">3 productos</span>
+    <span class="chip">5 puntos</span>
+  </div>
+</div>
+
+<!-- METODOLOGÍA -->
+<div style="max-width:800px;margin:1.5rem auto 0;padding:0 1rem">
+<div class="metodologia">
+  <div class="met-titulo">¿Cómo construimos estas metas?</div>
+  <div class="met-grid">
+    <div class="met-item">
+      <div class="met-num">H2025</div>
+      <div class="met-label">Resultados reales del año anterior</div>
+      <div class="met-desc">Cajita: 933 unidades en 44 días. Postre: 667 unidades. Punto de partida de toda la proyección.</div>
+    </div>
+    <div class="met-item">
+      <div class="met-num">3.720</div>
+      <div class="met-label">Cajitas vendidas en 2026</div>
+      <div class="met-desc">Ventas de enero a agosto de este año por punto, para entender el peso real de cada canal en el producto infantil.</div>
+    </div>
+    <div class="met-item">
+      <div class="met-num">$11.082M</div>
+      <div class="met-label">Ventas totales del negocio 2025</div>
+      <div class="met-desc">Usadas para calcular el volumen de clientes por punto y definir cuántos deben agregar un hechizo de sabor.</div>
+    </div>
+    <div class="met-item">
+      <div class="met-num">$41K</div>
+      <div class="met-label">Ticket promedio real por visita</div>
+      <div class="met-desc">Dato real de marzo 2026 por punto. Más preciso que cualquier estimación, e indispensable para las metas de dips.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- TOGGLE -->
+<div class="toggle-wrap">
+  <button class="toggle-btn activo" onclick="setEsc('Base',this)" id="btn-base">Base +18%</button>
+  <button class="toggle-btn" onclick="setEsc('Moderado',this)" id="btn-mod">Moderado +25%</button>
+</div>
+<div class="toggle-hint" id="toggle-hint">Mostrando escenario base — crecimiento sólido y realista sobre Halloween 2025</div>
+
+<!-- SECCIÓN RESUMEN GENERAL - insertar después del toggle-hint y antes del nav-puntos -->
+
+<div style="max-width:800px;margin:0 auto;padding:0 1rem 1.5rem" id="seccion-general">
+
+  <!-- TRES CIFRAS GRANDES -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gris1);border:1px solid var(--gris1);border-radius:var(--radio) var(--radio) 0 0;overflow:hidden;margin-bottom:1px">
+    <div style="background:#fff;padding:1.25rem 1rem;text-align:center">
+      <div style="font-size:11px;color:var(--gris3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Cajita Hechizada</div>
+      <div style="font-size:42px;font-weight:700;font-family:'Sora',sans-serif;color:var(--naranja);line-height:1" id="g-cajita-total">727</div>
+      <div style="font-size:12px;color:var(--gris3);margin-top:.3rem">unidades · $28.500</div>
+    </div>
+    <div style="background:#fff;padding:1.25rem 1rem;text-align:center;border-left:1px solid var(--gris1);border-right:1px solid var(--gris1)">
+      <div style="font-size:11px;color:var(--gris3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Hechizos de Sabor</div>
+      <div style="font-size:42px;font-weight:700;font-family:'Sora',sans-serif;color:var(--morado);line-height:1" id="g-dips-total">1.157</div>
+      <div style="font-size:12px;color:var(--gris3);margin-top:.3rem">dips · $4.500</div>
+    </div>
+    <div style="background:#fff;padding:1.25rem 1rem;text-align:center">
+      <div style="font-size:11px;color:var(--gris3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem">Postre Drácula</div>
+      <div style="font-size:42px;font-weight:700;font-family:'Sora',sans-serif;color:var(--verde);line-height:1" id="g-postre-total">493</div>
+      <div style="font-size:12px;color:var(--gris3);margin-top:.3rem">unidades · $9.900</div>
+    </div>
+  </div>
+
+  <!-- INGRESO TOTAL -->
+  <div style="background:var(--negro);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem">
+    <div style="font-size:13px;color:var(--gris3)">Ingreso total proyectado de la campaña</div>
+    <div style="font-size:24px;font-weight:700;font-family:'Sora',sans-serif;color:var(--naranja)" id="g-ing-total">$30.806.700</div>
+  </div>
+
+  <!-- FRASE CONTEXTO -->
+  <div style="background:#fff;border:1px solid var(--gris1);border-radius:var(--radio);padding:1.1rem 1.25rem;margin-bottom:1.25rem">
+    <div style="font-size:12px;font-weight:600;color:var(--naranja);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem;font-family:'Sora',sans-serif">Contexto de campaña</div>
+    <div style="font-size:14px;color:var(--negro);line-height:1.65" id="g-contexto">
+      En Halloween 2025 la cadena vendió <strong>933 cajitas</strong> y <strong>667 postres</strong> en 44 días. Esta campaña dura 29 días y arranca con un concepto más fuerte, un producto infantil rediseñado y tres hechizos de sabor completamente nuevos que el año anterior no existían. Las metas están construidas sobre los resultados reales del año anterior, ponderadas por el peso histórico de cada punto en este tipo de producto. No son cifras aspiracionales: son el resultado de crecer un <strong id="g-pct-crec">18–25%</strong> sobre lo que ya se demostró que es posible.
+    </div>
+  </div>
+
+  <!-- TABLA RESUMEN POR PUNTO -->
+  <div style="background:#fff;border:1px solid var(--gris1);border-radius:var(--radio);overflow:hidden">
+    <div style="padding:.85rem 1.25rem;border-bottom:1px solid var(--gris1);display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:14px;font-weight:700;font-family:'Sora',sans-serif">Metas por punto — vista general</div>
+      <div style="font-size:11px;color:var(--gris3)" id="g-esc-label">Escenario base</div>
+    </div>
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:var(--gris0)">
+          <th style="padding:.6rem .85rem;text-align:left;font-size:11px;color:var(--gris3);text-transform:uppercase;letter-spacing:.05em;font-weight:600;white-space:nowrap">Punto</th>
+          <th style="padding:.6rem .85rem;text-align:center;font-size:11px;color:var(--naranja);text-transform:uppercase;letter-spacing:.05em;font-weight:600;white-space:nowrap">Cajita</th>
+          <th style="padding:.6rem .5rem;text-align:center;font-size:10px;color:var(--gris3);font-weight:500">und/día</th>
+          <th style="padding:.6rem .85rem;text-align:center;font-size:11px;color:var(--morado);text-transform:uppercase;letter-spacing:.05em;font-weight:600;white-space:nowrap">Dips</th>
+          <th style="padding:.6rem .5rem;text-align:center;font-size:10px;color:var(--gris3);font-weight:500">und/día</th>
+          <th style="padding:.6rem .85rem;text-align:center;font-size:11px;color:var(--verde);text-transform:uppercase;letter-spacing:.05em;font-weight:600;white-space:nowrap">Postre</th>
+          <th style="padding:.6rem .5rem;text-align:center;font-size:10px;color:var(--gris3);font-weight:500">und/día</th>
+          <th style="padding:.6rem .85rem;text-align:right;font-size:11px;color:var(--gris3);text-transform:uppercase;letter-spacing:.05em;font-weight:600;white-space:nowrap">Ingreso</th>
+        </tr>
+      </thead>
+      <tbody id="g-tabla-body"></tbody>
+    </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAV PUNTOS -->
+<div class="nav-puntos">
+  <button class="nav-btn activo" onclick="setPunto('Principal',this)">Principal</button>
+  <button class="nav-btn" onclick="setPunto('Centro',this)">Centro</button>
+  <button class="nav-btn" onclick="setPunto('Unicentro',this)">Unicentro</button>
+  <button class="nav-btn" onclick="setPunto('Avenida',this)">Avenida</button>
+  <button class="nav-btn" onclick="setPunto('Domicilios',this)">Domicilios</button>
+</div>
+
+<!-- PANELES por punto × escenario -->
+<script>
+const D = {
+  Base: {
+    Principal: {
+      director:'Wilson', part_c:'13%', part_p:'22%', tasa_d:'6%', trans:186,
+      c:{total:97,sem:24,dia:3}, d:{total:336,sem:84,dia:12,cada:17},
+      p:{total:110,sem:28,dia:4},
+      ing:94*28500+324*4500+108*9900,
+      frase_c:'El año pasado este punto vendió 103 cajitas en 44 días (2,3/día). Esta campaña pedimos 3 por día, en 29 días. La Cajita Hechizada llega con concepto y nombre propios dentro de la campaña, lo que facilita la conversación con el cliente.',
+      frase_d:'De cada 17 clientes que entren al punto, necesitamos que 1 salga con un Hechizo de Sabor. A 186 clientes por día, eso es apenas 11 dips diarios — menos de uno por hora en una jornada típica.',
+      frase_p:'El año pasado Principal vendió 141 postres en 44 días. Esta campaña pedimos 4 por día — prácticamente el mismo ritmo pero en una campaña más corta y con un concepto más atractivo. Ofrecerlo activamente al cerrar cada pedido es suficiente.'
+    },
+    Centro: {
+      director:'Mario', part_c:'18%', part_p:'18%', tasa_d:'6%', trans:155,
+      c:{total:135,sem:34,dia:5}, d:{total:279,sem:70,dia:10,cada:17},
+      p:{total:90,sem:22,dia:3},
+      ing:131*28500+269*4500+89*9900,
+      frase_c:'Centro fue el segundo punto más fuerte en cajita el año pasado con 184 unidades. Esta campaña le pedimos 131 en menos días (29 vs 44), lo que implica un ritmo de 5 por día — apenas un 8% más que en H2025. Es la meta con mayor respaldo histórico.',
+      frase_d:'De cada 17 clientes que lleguen al punto, 1 agrega un Hechizo de Sabor. Centro recibe ~155 clientes por día: necesitamos 9 dips diarios. Una mesa que comparte crispetas o pollo es una oportunidad natural para ofrecer el dip.',
+      frase_p:'Centro tuvo 101 postres el año pasado (2,3/día). Le pedimos 3 por día esta campaña, un crecimiento del 34% en ritmo. El postre Drácula tiene nombre propio y concepto — es más fácil de vender que un postre genérico.'
+    },
+    Unicentro: {
+      director:'Mario', part_c:'52%', part_p:'18%', tasa_d:'5%', trans:167,
+      c:{total:389,sem:97,dia:13}, d:{total:252,sem:63,dia:9,cada:20},
+      p:{total:90,sem:22,dia:3},
+      ing:377*28500+243*4500+89*9900,
+      frase_c:'Unicentro es el punto estrella de la cajita: concentra el 52% de todas las ventas de este producto en 2026. En H2025 vendió 514 cajitas — 11,7 por día. Esta campaña pedimos 13 por día, un crecimiento del 11%. Con el concepto Halloween y el perfil familiar del punto, es la meta más sólida de toda la campaña.',
+      frase_d:'Unicentro tiene la tasa más baja de dips (5%) porque su fortaleza está en la cajita. De cada 20 clientes, 1 agrega un Hechizo. A 167 clientes por día, son 8 dips diarios — un complemento natural a la experiencia familiar.',
+      frase_p:'El postre tiene un rol complementario en Unicentro: 3 por día, para las familias que quieren cerrar bien la visita. Ofrecerlo como parte del "kit Halloween completo" junto a la cajita es la táctica más directa.'
+    },
+    Avenida: {
+      director:'Viviana', part_c:'10%', part_p:'18%', tasa_d:'6%', trans:111,
+      c:{total:76,sem:19,dia:3}, d:{total:200,sem:50,dia:7,cada:17},
+      p:{total:90,sem:22,dia:3},
+      ing:73*28500+193*4500+89*9900,
+      frase_c:'Avenida vendió 90 cajitas en Halloween 2025. Esta campaña pedimos 73 en 29 días — un ritmo de 3 por día, que representa un crecimiento del 23% sobre H2025. El punto tiene flujo familiar en fines de semana que favorece este producto.',
+      frase_d:'De cada 17 clientes, 1 agrega un Hechizo de Sabor. Avenida recibe ~111 clientes por día: necesitamos 7 dips diarios. Una pregunta al entregar el pedido — "¿va a llevar uno de nuestros hechizos de sabor?" — es suficiente para llegar a esta meta.',
+      frase_p:'Avenida tiene una participación del 18% en postre, igual que Centro y Unicentro. Son 3 postres por día — el mismo ritmo que otros puntos con ticket similar. Es una meta equilibrada que no depende de un esfuerzo extraordinario.'
+    },
+    Domicilios: {
+      director:'Nancy', part_c:'7%', part_p:'24%', tasa_d:'4%', trans:111,
+      c:{total:53,sem:13,dia:2}, d:{total:133,sem:33,dia:5,cada:25},
+      p:{total:120,sem:30,dia:4},
+      ing:52*28500+128*4500+118*9900,
+      frase_c:'Domicilios es el canal con mayor crecimiento exigido en cajita: pasamos de 42 unidades en H2025 a 52 esta campaña. Son 2 cajitas por día por delivery. Cualquier familia que pide para varios puede incluir la cajita para el niño del grupo.',
+      frase_d:'La tasa más baja de todos los puntos: de cada 25 pedidos, 1 lleva un Hechizo de Sabor. Son 4 dips por día — incluirlo como sugerencia en la descripción del pedido o al confirmar el domicilio es la táctica más efectiva.',
+      frase_p:'En H2025, Domicilios fue el canal estrella del postre con 175% de cumplimiento. Esta campaña le asignamos la participación más alta (24%) porque el antecedente lo justifica. Son 4 postres por día — en un pedido familiar de $45.000, agregar un postre de $9.900 tiene sentido y el equipo ya sabe cómo lograrlo.'
+    }
+  },
+  Moderado: {
+    Principal: {
+      director:'Wilson', part_c:'13%', part_p:'22%', tasa_d:'10%', trans:186,
+      c:{total:104,sem:26,dia:4}, d:{total:543,sem:136,dia:19,cada:10},
+      p:{total:121,sem:30,dia:4},
+      ing:100*28500+540*4500+119*9900,
+      frase_c:'100 cajitas en 29 días: un ritmo de 3 por día. Principal llegó a 103 en H2025 en 44 días — esta meta exige exactamente ese mismo nivel de ejecución pero concentrado en menos tiempo. Con el concepto nuevo, es alcanzable.',
+      frase_d:'De cada 10 clientes, 1 agrega un Hechizo de Sabor. A 186 clientes por día, eso es 19 dips diarios. Requiere oferta activa y consistente de todo el equipo — que cada persona en caja o en sala lo mencione naturalmente al entregar el pedido.',
+      frase_p:'4 postres por día, 30 por semana. Principal en H2025 logró 141 postres en 44 días (3,2/día). Esta meta pide 4/día — un 28% más de ritmo. Un postre por turno mañana y uno por turno tarde y noche es suficiente para llegar.'
+    },
+    Centro: {
+      director:'Mario', part_c:'18%', part_p:'18%', tasa_d:'10%', trans:155,
+      c:{total:144,sem:36,dia:5}, d:{total:450,sem:112,dia:16,cada:10},
+      p:{total:99,sem:25,dia:3},
+      ing:138*28500+448*4500+97*9900,
+      frase_c:'5 cajitas por día, 34 por semana. En H2025 Centro vendió 184 cajitas en 44 días (4,2/día). Esta meta pide 4,8/día — un 14% más de ritmo en un punto que ya demostró capacidad de hacerlo. Muy alcanzable con activación visible en el punto.',
+      frase_d:'De cada 10 clientes, 1 agrega un Hechizo. Centro tiene 155 clientes por día: necesitamos 15 dips diarios. Es el escenario más exigente para este punto, y requiere que el equipo lo ofrezca de manera activa y habitual durante toda la campaña.',
+      frase_p:'3 postres por día. Centro tuvo 101 postres en H2025 — este escenario le pide 97 en 29 días, un ritmo 46% mayor. Es la meta más exigente en postre para este punto y requiere incorporarlo como cierre natural de cada pedido.'
+    },
+    Unicentro: {
+      director:'Mario', part_c:'52%', part_p:'18%', tasa_d:'8%', trans:167,
+      c:{total:415,sem:104,dia:14}, d:{total:390,sem:98,dia:13,cada:12},
+      p:{total:99,sem:25,dia:3},
+      ing:399*28500+388*4500+97*9900,
+      frase_c:'14 cajitas por día, 100 por semana. Unicentro en H2025 llegó a 11,7/día. Esta meta pide un 18% más — justificado por el nuevo concepto de campaña. En el punto con mayor flujo de familias, 104 cajitas por semana es ambicioso pero real.',
+      frase_d:'De cada 12 clientes, 1 agrega un Hechizo de Sabor. A 167 clientes por día, son 13 dips diarios. Unicentro tiene familias que comparten pedidos grandes — el dip es una adición natural a una bandeja de crispetas o pollo broaster.',
+      frase_p:'3 postres por día en el punto más familiar de la cadena. Un postre de Halloween es el complemento perfecto para una cajita o una mesa de familia. Unicentro tiene el perfil de cliente ideal para cerrar con postre.'
+    },
+    Avenida: {
+      director:'Viviana', part_c:'10%', part_p:'18%', tasa_d:'10%', trans:111,
+      c:{total:81,sem:20,dia:3}, d:{total:323,sem:81,dia:11,cada:10},
+      p:{total:99,sem:25,dia:3},
+      ing:78*28500+322*4500+97*9900,
+      frase_c:'3 cajitas por día. Avenida vendió 90 en H2025 en 44 días. Este escenario pide 78 en 29 días — un ritmo 31% más alto. El punto tiene fines de semana con buen flujo familiar y esos días pueden marcar la diferencia para llegar a la meta semanal.',
+      frase_d:'De cada 10 clientes, 1 agrega un Hechizo. Son 11 dips por día en un punto con 111 clientes diarios. El precio de $4.500 hace que la barrera de compra sea baja — una pregunta bien hecha al entregar es suficiente para lograr la tasa.',
+      frase_p:'3 postres por día, 24 por semana. En H2025 Avenida fue el punto más fuerte en postre con 155 unidades (3,5/día). Esta campaña le pedimos el mismo ritmo — no es una meta nueva, es mantener lo que ya demostró que puede hacer.'
+    },
+    Domicilios: {
+      director:'Nancy', part_c:'7%', part_p:'24%', tasa_d:'6%', trans:111,
+      c:{total:56,sem:14,dia:2}, d:{total:194,sem:48,dia:7,cada:17},
+      p:{total:132,sem:33,dia:5},
+      ing:55*28500+193*4500+130*9900,
+      frase_c:'2 cajitas por día — la misma meta que en el escenario base, con 3 unidades más en el total de la campaña. Domicilios no es el canal natural de la cajita, pero cualquier pedido familiar es una oportunidad de incluirla para el niño del grupo.',
+      frase_d:'De cada 17 pedidos, 1 lleva un Hechizo de Sabor. Son 7 dips por día. Incluirlo como sugerencia al confirmar el pedido o en la descripción de la app es la táctica que mejor funciona en este canal sin afectar el flujo operativo.',
+      frase_p:'El canal estrella del postre: 130 unidades en 29 días, 4 por día. En H2025 Domicilios cumplió el 175% de su meta de postre. Esta campaña tiene una meta más alta (3,7/día vs 3,2/día en H2025) porque el antecedente demuestra que la capacidad está. El Postre Drácula tiene nombre propio — es más fácil de recomendar.'
+    }
+  }
+};
+
+let esc = 'Base', punto = 'Principal';
+
+function fmt(n){return n.toLocaleString('es-CO')}
+function fmtCOP(n){return '$'+Math.round(n).toLocaleString('es-CO')}
+
+function render(){
+  const pd = D[esc][punto];
+  document.getElementById('toggle-hint').textContent =
+    esc==='Base'
+      ? 'Escenario base — crecimiento sólido y realista sobre Halloween 2025 (+18%)'
+      : 'Escenario moderado — mayor esfuerzo de equipo, mayor retorno (+25%)';
+
+  const ingTotal = pd.c.total*28500 + pd.d.total*4500 + pd.p.total*9900;
+
+  // Badge
+  const badge = esc==='Base'
+    ? `<span class="punto-escenario-badge badge-base">Escenario base</span>`
+    : `<span class="punto-escenario-badge badge-mod">Escenario moderado</span>`;
+
+  let html = `
+  <div class="punto-header">
+    <div>
+      <div class="punto-nombre">${punto}</div>
+      <div class="punto-director">Director: ${pd.director}</div>
+    </div>
+    ${badge}
+  </div>
+
+  <div class="resumen-grid">
+    <div class="resumen-cell">
+      <div class="rc-prod">Cajita Hechizada</div>
+      <div class="rc-num naranja">${fmt(pd.c.total)}</div>
+      <div class="rc-sub">unidades · $28.500 c/u</div>
+    </div>
+    <div class="resumen-cell">
+      <div class="rc-prod">Hechizos de Sabor</div>
+      <div class="rc-num morado">${fmt(pd.d.total)}</div>
+      <div class="rc-sub">dips · $4.500 c/u</div>
+    </div>
+    <div class="resumen-cell">
+      <div class="rc-prod">Postre Drácula</div>
+      <div class="rc-num verde">${fmt(pd.p.total)}</div>
+      <div class="rc-sub">unidades · $9.900 c/u</div>
+    </div>
+  </div>
+
+  <!-- CAJITA -->
+  <div class="sec">
+    <div class="sec-titulo">
+      <div class="sec-titulo-bar bar-naranja"></div>
+      Cajita Sorpresa Hechizada
+    </div>
+    <div class="sec-desc">$28.500 · Producto infantil con opciones de proteína y bebida · </div>
+    <table class="tabla-meta">
+      <thead><tr>
+        <th>Meta campaña</th><th>Por semana</th><th>Por día</th><th>Participación asignada</th>
+      </tr></thead>
+      <tbody><tr>
+        <td><span class="num-grande naranja">${fmt(pd.c.total)}</span><br><small style="color:var(--gris3)">unidades en 29 días</small></td>
+        <td><span style="font-size:22px;font-weight:700;font-family:'Sora',sans-serif">${fmt(pd.c.sem)}</span><br><small style="color:var(--gris3)">unidades/semana</small></td>
+        <td><span style="font-size:22px;font-weight:700;font-family:'Sora',sans-serif">${fmt(pd.c.dia)}</span><br><small style="color:var(--gris3)">unidades/día</small></td>
+        <td>
+          <span class="pill-part">${pd.part_c} del total</span>
+          <div class="barra-wrap" style="margin-top:6px;width:120px">
+            <div class="barra-fill" style="width:${parseFloat(pd.part_c)}%;background:var(--naranja)"></div>
+          </div>
+          <div style="font-size:11px;color:var(--gris3);margin-top:3px">Basado en H2025 + ventas 2026</div>
+        </td>
+      </tr></tbody>
+    </table>
+    <div class="frase-box frase-naranja">
+      <div class="frase-titulo">Por qué es alcanzable</div>
+      ${pd.frase_c}
+    </div>
+  </div>
+
+  <!-- DIPS -->
+  <div class="sec">
+    <div class="sec-titulo">
+      <div class="sec-titulo-bar bar-morado"></div>
+      Hechizos de Sabor — Dips
+    </div>
+    <div class="sec-desc">$4.500 c/u · Irresistible · Embrujado · Hipnótico · Meta equitativa entre los 3</div>
+    <table class="tabla-meta">
+      <thead><tr>
+        <th>Meta campaña</th><th>Por semana</th><th>Por día</th><th>Tasa de conversión</th>
+      </tr></thead>
+      <tbody><tr>
+        <td><span class="num-grande morado">${fmt(pd.d.total)}</span><br><small style="color:var(--gris3)">dips en 29 días</small></td>
+        <td><span style="font-size:22px;font-weight:700;font-family:'Sora',sans-serif">${fmt(pd.d.sem)}</span><br><small style="color:var(--gris3)">dips/semana</small></td>
+        <td><span style="font-size:22px;font-weight:700;font-family:'Sora',sans-serif">${fmt(pd.d.dia)}</span><br><small style="color:var(--gris3)">dips/día</small></td>
+        <td>
+          <span class="pill-part">${pd.tasa_d} de clientes</span>
+          <div style="font-size:13px;margin-top:6px;font-weight:600">1 de cada ${pd.d.cada} clientes</div>
+          <div style="font-size:11px;color:var(--gris3);margin-top:2px">${fmt(pd.trans)} clientes/día estimados</div>
+        </td>
+      </tr></tbody>
+    </table>
+    <div class="frase-box frase-morado">
+      <div class="frase-titulo">Por qué es alcanzable</div>
+      ${pd.frase_d}
+    </div>
+  </div>
+
+  <!-- POSTRE -->
+  <div class="sec">
+    <div class="sec-titulo">
+      <div class="sec-titulo-bar bar-verde"></div>
+      Postre Drácula
+    </div>
+    <div class="sec-desc">$9.900 · Postre de edición limitada · Complemento ideal para mesa familiar o pedido de domicilio</div>
+    <table class="tabla-meta">
+      <thead><tr>
+        <th>Meta campaña</th><th>Por semana</th><th>Por día</th><th>Participación asignada</th>
+      </tr></thead>
+      <tbody><tr>
+        <td><span class="num-grande verde">${fmt(pd.p.total)}</span><br><small style="color:var(--gris3)">unidades en 29 días</small></td>
+        <td><span style="font-size:22px;font-weight:700;font-family:'Sora',sans-serif">${fmt(pd.p.sem)}</span><br><small style="color:var(--gris3)">unidades/semana</small></td>
+        <td><span style="font-size:22px;font-weight:700;font-family:'Sora',sans-serif">${fmt(pd.p.dia)}</span><br><small style="color:var(--gris3)">unidades/día</small></td>
+        <td>
+          <span class="pill-part">${pd.part_p} del total</span>
+          <div class="barra-wrap" style="margin-top:6px;width:120px">
+            <div class="barra-fill" style="width:${parseFloat(pd.part_p)*4}%;background:var(--verde)"></div>
+          </div>
+          <div style="font-size:11px;color:var(--gris3);margin-top:3px">Basado en H2025 + histórico negocio</div>
+        </td>
+      </tr></tbody>
+    </table>
+    <div class="frase-box frase-verde">
+      <div class="frase-titulo">Por qué es alcanzable</div>
+      ${pd.frase_p}
+    </div>
+  </div>
+
+  <!-- FINANCIERO PUNTO -->
+  <div class="financiero">
+    <div class="fin-titulo">Aporte de ${punto} a la campaña</div>
+    <div class="fin-fila">
+      <span class="fin-label">Cajita Sorpresa Hechizada</span>
+      <span class="fin-valor">${fmtCOP(pd.c.total*28500)}</span>
+    </div>
+    <div class="fin-fila">
+      <span class="fin-label">Hechizos de Sabor (dips)</span>
+      <span class="fin-valor">${fmtCOP(pd.d.total*4500)}</span>
+    </div>
+    <div class="fin-fila">
+      <span class="fin-label">Postre Drácula</span>
+      <span class="fin-valor">${fmtCOP(pd.p.total*9900)}</span>
+    </div>
+    <div class="fin-total-fila">
+      <span class="fin-total-label">Ingreso total esperado</span>
+      <span class="fin-total-valor">${fmtCOP(ingTotal)}</span>
+    </div>
+    <div class="fin-nota">Ingreso proyectado de este punto durante los 29 días de campaña, sin incluir el resto del portafolio habitual del negocio.</div>
+  </div>`;
+
+  document.getElementById('panel-activo').innerHTML = html;
+}
+
+function setEsc(e, btn){
+  esc = e;
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('activo'));
+  btn.classList.add('activo');
+  render();
+}
+function setPunto(p, btn){
+  punto = p;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('activo'));
+  btn.classList.add('activo');
+  render();
+}
+</script>
+
+<div class="panel visible" style="max-width:800px;margin:0 auto;padding:0 1rem 3rem">
+  <div id="panel-activo"></div>
+</div>
+
+<!-- RESUMEN TOTAL CAMPAÑA -->
+<div style="max-width:800px;margin:0 auto;padding:0 1rem 3rem">
+<div style="background:var(--negro);border-radius:var(--radio);padding:1.5rem" id="resumen-total">
+  <div class="fin-titulo">Ingreso total campaña · todos los puntos</div>
+  <div id="totales-html"></div>
+  <div class="fin-nota" id="fin-nota-total"></div>
+</div>
+</div>
+
+<script>
+function renderTotales(){
+  const totales = {
+    Base:{c:750,d:1200,p:500},
+    Moderado:{c:800,d:1900,p:550}
+  };
+  const t = totales[esc];
+  const ing = t.c*28500 + t.d*4500 + t.p*9900;
+  const ub  = t.c*28500*0.517 + t.d*4500*0.647 + t.p*9900*0.5538;
+  const cn  = ub - 2500000;
+
+  document.getElementById('totales-html').innerHTML = `
+    <div class="fin-fila"><span class="fin-label">Cajita Sorpresa Hechizada (${fmt(t.c)} und)</span><span class="fin-valor">${fmtCOP(t.c*28500)}</span></div>
+    <div class="fin-fila"><span class="fin-label">Hechizos de Sabor — dips (${fmt(t.d)} und)</span><span class="fin-valor">${fmtCOP(t.d*4500)}</span></div>
+    <div class="fin-fila"><span class="fin-label">Postre Drácula (${fmt(t.p)} und)</span><span class="fin-valor">${fmtCOP(t.p*9900)}</span></div>
+    <div class="fin-total-fila"><span class="fin-total-label">Ingreso total campaña</span><span class="fin-total-valor">${fmtCOP(ing)}</span></div>`;
+
+  document.getElementById('fin-nota-total').textContent =
+    `Utilidad bruta estimada: ${fmtCOP(ub)} (MB ${(ub/ing*100).toFixed(1)}%) · Presupuesto publicidad: $2.500.000 · Contribución neta de campaña: ${fmtCOP(cn)}`;
+}
+
+
+function renderGeneral(){
+  const totales = {
+    Base:{c:750,d:1200,p:500},
+    Moderado:{c:800,d:1900,p:550}
+  };
+  const datos = {
+    Base:{
+      Principal: {c:97,d:336,p:110},
+      Centro:    {c:135,d:279,p:90},
+      Unicentro: {c:389,d:252,p:90},
+      Avenida:   {c:76,d:200,p:90},
+      Domicilios:{c:53,d:133,p:120}
+    },
+    Moderado:{
+      Principal: {c:104,d:543,p:121},
+      Centro:    {c:144,d:450,p:99},
+      Unicentro: {c:415,d:390,p:99},
+      Avenida:   {c:81,d:323,p:99},
+      Domicilios:{c:56,d:194,p:132}
+    }
+  };
+
+  const t = totales[esc];
+  const ing = t.c*28500 + t.d*4500 + t.p*9900;
+
+  document.getElementById('g-cajita-total').textContent = fmt(t.c);
+  document.getElementById('g-dips-total').textContent   = fmt(t.d);
+  document.getElementById('g-postre-total').textContent = fmt(t.p);
+  document.getElementById('g-ing-total').textContent    = fmtCOP(ing);
+  document.getElementById('g-esc-label').textContent    = esc==='Base' ? 'Escenario base' : 'Escenario moderado';
+
+  const orden = ['Principal','Centro','Unicentro','Avenida','Domicilios'];
+  let filas = '';
+  let totC=0,totD=0,totP=0,totIng=0;
+  orden.forEach((p,i) => {
+    const d = datos[esc][p];
+    const ingP = d.c*28500 + d.d*4500 + d.p*9900;
+    totC+=d.c; totD+=d.d; totP+=d.p; totIng+=ingP;
+    const bg = i%2===0 ? '#fff' : 'var(--gris0)';
+    filas += `<tr style="background:${bg}">
+      <td style="padding:.65rem .85rem;font-weight:600;font-family:'Sora',sans-serif">${p}</td>
+      <td style="padding:.65rem .85rem;text-align:center;font-size:18px;font-weight:700;font-family:'Sora',sans-serif;color:var(--naranja)">${fmt(d.c)}</td>
+      <td style="padding:.65rem .5rem;text-align:center;font-size:12px;color:var(--gris3)">${Math.round(d.c/29)}/día</td>
+      <td style="padding:.65rem .85rem;text-align:center;font-size:18px;font-weight:700;font-family:'Sora',sans-serif;color:var(--morado)">${fmt(d.d)}</td>
+      <td style="padding:.65rem .5rem;text-align:center;font-size:12px;color:var(--gris3)">${Math.round(d.d/29)}/día</td>
+      <td style="padding:.65rem .85rem;text-align:center;font-size:18px;font-weight:700;font-family:'Sora',sans-serif;color:var(--verde)">${fmt(d.p)}</td>
+      <td style="padding:.65rem .5rem;text-align:center;font-size:12px;color:var(--gris3)">${Math.round(d.p/29)}/día</td>
+      <td style="padding:.65rem .85rem;text-align:right;font-size:13px;font-weight:600">${fmtCOP(ingP)}</td>
+    </tr>`;
+  });
+  filas += `<tr style="background:var(--negro)">
+    <td style="padding:.75rem .85rem;font-weight:700;color:#fff;font-family:'Sora',sans-serif">Total</td>
+    <td style="padding:.75rem .85rem;text-align:center;font-size:18px;font-weight:700;font-family:'Sora',sans-serif;color:var(--naranja)">${fmt(totC)}</td>
+    <td style="padding:.75rem .5rem;text-align:center;font-size:12px;color:var(--gris3)">${Math.round(totC/29)}/día</td>
+    <td style="padding:.75rem .85rem;text-align:center;font-size:18px;font-weight:700;font-family:'Sora',sans-serif;color:var(--morado)">${fmt(totD)}</td>
+    <td style="padding:.75rem .5rem;text-align:center;font-size:12px;color:var(--gris3)">${Math.round(totD/29)}/día</td>
+    <td style="padding:.75rem .85rem;text-align:center;font-size:18px;font-weight:700;font-family:'Sora',sans-serif;color:var(--verde)">${fmt(totP)}</td>
+    <td style="padding:.75rem .5rem;text-align:center;font-size:12px;color:var(--gris3)">${Math.round(totP/29)}/día</td>
+    <td style="padding:.75rem .85rem;text-align:right;font-size:14px;font-weight:700;color:var(--naranja)">${fmtCOP(totIng)}</td>
+  </tr>`;
+  document.getElementById('g-tabla-body').innerHTML = filas;
+}
+
+const _origRender = render;
+render = function(){_origRender(); renderTotales(); renderGeneral();}
+render();
+</script>
+
+</body>
+</html>
