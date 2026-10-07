@@ -135,7 +135,7 @@ h1,h2,h3,h4{font-family:'Sora',sans-serif}
   <div class="header-title">Bajo el <span>hechizo</span> del sabor</div>
   <div class="header-sub">Metas por punto · Halloween 2026</div>
   <div class="header-chips">
-    <span class="chip">5 oct – 2 nov</span>
+    <span class="chip">7 oct – 4 nov</span>
     <span class="chip">29 días</span>
     <span class="chip">3 productos</span>
     <span class="chip">5 puntos</span>
@@ -171,12 +171,8 @@ h1,h2,h3,h4{font-family:'Sora',sans-serif}
 </div>
 </div>
 
-<!-- TOGGLE -->
-<div class="toggle-wrap">
-  <button class="toggle-btn activo" onclick="setEsc('Base',this)" id="btn-base">Base +18%</button>
-  <button class="toggle-btn" onclick="setEsc('Moderado',this)" id="btn-mod">Moderado +25%</button>
-</div>
-<div class="toggle-hint" id="toggle-hint">Mostrando escenario base — crecimiento sólido y realista sobre Halloween 2025</div>
+<!-- TOGGLE HINT (sin toggle, solo escenario moderado) -->
+<div class="toggle-hint" id="toggle-hint">Escenario moderado — mayor esfuerzo de equipo, mayor retorno (+25%)</div>
 
 <!-- SECCIÓN RESUMEN GENERAL - insertar después del toggle-hint y antes del nav-puntos -->
 
@@ -350,7 +346,7 @@ const D = {
   }
 };
 
-let esc = 'Base', punto = 'Principal';
+let esc = 'Moderado', punto = 'Principal';
 
 function fmt(n){return n.toLocaleString('es-CO')}
 function fmtCOP(n){return '$'+Math.round(n).toLocaleString('es-CO')}
@@ -358,9 +354,7 @@ function fmtCOP(n){return '$'+Math.round(n).toLocaleString('es-CO')}
 function render(){
   const pd = D[esc][punto];
   document.getElementById('toggle-hint').textContent =
-    esc==='Base'
-      ? 'Escenario base — crecimiento sólido y realista sobre Halloween 2025 (+18%)'
-      : 'Escenario moderado — mayor esfuerzo de equipo, mayor retorno (+25%)';
+    'Escenario moderado — mayor esfuerzo de equipo, mayor retorno (+25%)';
 
   const ingTotal = pd.c.total*28500 + pd.d.total*4500 + pd.p.total*9900;
 
